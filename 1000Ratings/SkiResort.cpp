@@ -29,28 +29,39 @@ const int inf = 1e9;
 const ll INF = 1e18;
 const int MOD = 1e9 + 7;
 
-
 void Tauhid() {
     // write your code here...
-    int n, dmg;
-    cin >> n >> dmg;
 
-    vi v(n);
+    ll n, k, q;
+    cin >> n >> k >> q;
+
+    vll v(n);
     loop(i, 0, n-1) cin >> v[i];
 
-    vpp map;
+    vi cnt;
+    int c = 0;
     loop(i, 0, n-1) {
-        ll res = v[i] % dmg;
-        if (res == 0) res += dmg;
-        map.pb({-res, i});
+        if (v[i] > q) {
+            cnt.pb(c);
+            c = 0;
+        }
+        else ++c;
     }
+    
+    cnt.pb(c);
 
-    sort(all(map));
+    ll ans = 0;
 
-    for (auto &i : map) {
-        cout << i.se + 1 << " ";
+    loop(i, 0, sz(cnt) - 1) {
+        // cout << cnt[i] << " ";
+        if (cnt[i] < k) continue;
+        ans += ((cnt[i] - k + 1) * (cnt[i] - k + 2)) / 2;
     }
-    cout << endl;
+    // cout << endl;
+
+    cout << ans << endl;
+
+
 }
 
 int main() {
@@ -63,12 +74,3 @@ int main() {
     }
     return 0;
 }
-
-/*
-
-2 8 3 5
--2 -2 -3 -2
-
-3 1 2 4
-
-*/
