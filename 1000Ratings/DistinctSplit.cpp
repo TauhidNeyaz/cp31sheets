@@ -53,11 +53,55 @@ const ll   INF = 1e18;
 const int  inf = 1e9;
 const int  MOD = 1e9 + 7;
 
-
 void Tauhid() {
-    // write your here... 
 
+    int n; 
+    cin >> n;
+    string s; 
+    cin >> s;
+
+    string t = s;
+    reverse(all(t));
+
+    vi pre(n), suff(n);
+    vi pre_freq(26, 0), suff_freq(26, 0);
+
+    pre[0] = 1;
+    pre_freq[s[0] - 'a'] = 1;
+    loop(i, 1, n - 1) {
+        if (pre_freq[s[i] - 'a'] == 0) {
+            pre[i] = pre[i - 1] + 1;
+            pre_freq[s[i] - 'a'] = 1;
+        } else {
+            pre[i] = pre[i - 1];
+        }
+    }
+
+    suff[0] = 1;
+    suff_freq[t[0] - 'a'] = 1;
+    loop(i, 1, n - 1) {
+        if (suff_freq[t[i] - 'a'] == 0) {
+            suff[i] = suff[i - 1] + 1;
+            suff_freq[t[i] - 'a'] = 1;
+        } else {
+            suff[i] = suff[i - 1];
+        }
+    }
+
+    reverse(all(suff));
+
+    int ans = 0;
+    loop(i, 0, n - 2) {
+        ans = max(ans, (pre[i] + suff[i + 1]));
+    }
+
+    ans = max({ans, pre[n-1], suff[0]});
+
+    // printv(pre);
+    // printv(suff);
+    cout << ans << ln;
 }
+
 
 
 int main() {
@@ -70,3 +114,10 @@ int main() {
     }
     return 0;
 }
+
+/*
+a b c a b c d
+1 2 3 3 3 3 4
+4 4 4 4 3 2 1
+
+*/
