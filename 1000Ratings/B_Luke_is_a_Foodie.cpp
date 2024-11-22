@@ -56,25 +56,27 @@ const int  MOD = 1e9 + 7;
 
 void Tauhid() {
     // write your here... 
-    ll n, x, s, q;
-    cin >> n >> x >> s >> q;
-    vector <ll> a(n);
-    a[0] = x * s;
-    q -= x * s;
-    if (q < 0) cout << "-1\n";
-    else {
-        for (int i = 0; i < n; ++i) {
-            ll now = min(x - 1, q);
-            a[i] += now;
-            q -= now;
-        }
-        if (q > 0) cout << "-1\n";
-        else {
-            // sort(all(a));
-            for (int i = 0; i < n; ++i) cout << a[i] << " ";
-            cout << "\n";
+    int n, k; 
+    cin >> n >> k;
+
+    vll v(n);
+    read_v(v);
+
+    ll low = v[0] - k, high = v[0] + k;
+    int ans = 0;
+
+    loop(i, 1, n-1) {
+
+        low = max(low, v[i] - k);
+        high = min(high, v[i] + k);
+
+        if (low > high) {
+            ++ans;
+            low = v[i] - k;
+            high = v[i] + k;
         }
     }
+    cout << ans << ln;
 }
 
 
